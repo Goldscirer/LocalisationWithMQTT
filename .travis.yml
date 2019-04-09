@@ -20,7 +20,7 @@ android:
 
 script:
   - yarn test
-  - npm run ci
+  - yarn run ci
   - cd android && ./gradlew assembleRelease
 
 deploy:
