@@ -5,30 +5,16 @@ cache: yarn
 
 before_install:
   - cd SmartHomeMobile
-  - node --version
 
 install:
   - yarn install
 
-android:
-  components:
-    - build-tools-27.0.0
-    - android-27
-    - extra-android-m2repository
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - addon-google_apis-google-16
-
 script:
   - yarn test
-  - yarn run ci
-  - cd android && ./gradlew assembleRelease
 
 deploy:
   provider: releases
   skip-cleanup: true
-  file: $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app-release-unsigned.apk
   github-token: $GITHUB_TOKEN
   on:
     branch: master
-
