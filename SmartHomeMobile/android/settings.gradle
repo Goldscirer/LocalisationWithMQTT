@@ -1,0 +1,3 @@
+rootProject.name = 'SmartHomeMobile'
+
+include ':app'
