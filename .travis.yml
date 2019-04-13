@@ -13,7 +13,7 @@ script:
   - yarn test
 
 deploy:
-  provider: releases
+  provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   on:
