@@ -4,6 +4,7 @@ node_js:
 cache: yarn
 
 before_install:
+  - cd SmartHomeMobile
   - node --version
 
 install:
@@ -19,7 +20,6 @@ android:
     - addon-google_apis-google-16
 
 script:
-  - cd SmartHomeMobile
   - yarn test
   - yarn run ci
   - cd android && ./gradlew assembleRelease
