@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#003478",
+        "elevation": 10,
+        "height": 80,
+        "justifyContent": "center",
+        "paddingTop": 5,
+        "position": "relative",
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 40,
+          "width": 0,
+        },
+        "shadowOpacity": 0.5,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      SMART HOME
+    </Text>
+  </View>
+  <RCTScrollView>
+    <View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#fff",
+            "borderColor": "#007aff",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "marginLeft": 5,
+            "marginRight": 5,
+            "marginTop": 10,
+            "opacity": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#007aff",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "paddingBottom": 10,
+              "paddingTop": 10,
+            }
+          }
+        >
+          SEND YOURS LOCATION
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
