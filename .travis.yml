@@ -3,6 +3,9 @@ node_js:
   - 11.6.0
 cache: yarn
 
+notifications:
+  email: false
+
 before_install:
   - cd SmartHomeMobile
 
