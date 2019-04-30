@@ -1,0 +1,85 @@
+import { Client, Message } from 'react-native-paho-mqtt';
+import {setStateHome} from "../../View/HomeScreen";
+
+let clientId = 'Mobile';
+let ipAddress = '192.168.10.254:1884';
+let prefix = 'ws://';
+let sufix = '/ws';
+let hostName = prefix + ipAddress + sufix;
+
+const myStorage = {
+    setItem: (key, item) => {
+        myStorage[key] = item;
+    },
+    getItem: (key) => myStorage[key],
+    removeItem: (key) => {
+        delete myStorage[key];
+    },
+};
+
+const JSON_CLOSE = "{ \"state\": 1, \"userID\": \"Mobile\" }"
+const JSON_OPEN = "{  \"state\": 0, \"userID\": \"Mobile\" }"
+
+const client = new Client({ uri: hostName, clientId: clientId, storage: myStorage });
+
+export function setEventHandlers(){
+    console.log('setEvent');
+    client.on('connectionLost', (responseObject) => {
+        if (responseObject.errorCode !== 0) {
+            console.log(responseObject.errorMessage);
+        }
+    });
+    client.on('messageReceived', (message) => {
+        console.log(message.payloadString);
+        let obj = JSON.parse(message.payloadString);
+        console.log(obj);
+        setStateHome();
+    });
+}
+
+export function clientConnect( host,name ){
+    clientId = name;
+    hostName = host;
+    console.log('clienCOnnect');
+    client.connect()
+        .then(() => {
+            // Once a connection has been made, make a subscription and send a message.
+            console.log('onConnect');
+            client.subscribe('MQTT_Data');
+            client.subscribe('MQTT_Garage');
+            return client.subscribe('MQTT_Test');
+        })
+        .catch((responseObject) => {
+            if (responseObject.errorCode !== 0) {
+                console.log('onConnectionLost:' + responseObject.errorMessage);
+            }
+        })
+    ;
+}
+
+export function closeGate() {
+    const message = new Message(JSON_CLOSE);
+    message.destinationName = 'MQTT_Test';
+    client.send(message);
+}
+
+export function openGate() {
+    const message = new Message(JSON_OPEN);
+    message.destinationName = 'MQTT_Test';
+    client.send(message);
+}
+
+export function closeGarage() {
+    const message = new Message(JSON_CLOSE);
+    message.destinationName = 'MQTT_Garage';
+    client.send(message);
+}
+
+export function openGarage() {
+    const message = new Message(JSON_OPEN);
+    message.destinationName = 'MQTT_Garage';
+    client.send(message);
+}
+
+
+// connect the client
