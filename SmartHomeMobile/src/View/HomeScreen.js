@@ -8,15 +8,36 @@ import {
     openGate,
     closeGarage, openGarage
 } from "../Components/Modules/MQTTConnectionHandler";
+import {CoverageSummary as Utils} from "istanbul-lib-coverage";
+
+export function setStateHome(obj){
+    console.log('dziallaaa');
+    console.log(HomeScreen.this.state);
+}
 
 class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            temperature: 0,
+            pressure: 0,
+            humidity: 0,
+        };
     }
 
     componentDidMount() {
         setEventHandlers();
+    }
+
+    setParametersState (obj) {
+        this.setState(previousState => (
+            {
+                temperature:  obj.temperature,
+                pressure: obj.pressure,
+                humidity: obj.humidity
+            }
+        ))
     }
 
     render() {
