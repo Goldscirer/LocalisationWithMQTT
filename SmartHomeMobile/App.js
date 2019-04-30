@@ -17,6 +17,18 @@ class App extends Component {
     this.requestLocationPermissions();
   }
 
+    async _loadAssetsAsync() {
+        try {
+            await cacheAssetsAsync({
+                images: [
+                    require('./assets/images/bckgSplash.png'),
+                ],
+            })
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
   async requestLocationPermissions() {
     try {
       await PermissionsAndroid.request(

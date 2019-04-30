@@ -4,6 +4,7 @@ import { Button, Header } from './../../src/Components/common';
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import { sendMessage } from '../View/Map';
 import { Client, Message } from 'react-native-paho-mqtt';
+import {openGate} from "../Components/Modules/MQTTConnectionHandler";
 
 const MESSAGE_JSON_ON = "{ \"state\": 0 }"
 const MESSAGE_JSON_OFF = "{ \"state\": 1 }"
@@ -53,8 +54,9 @@ class MapScreen extends Component {
         console.log(this.state.latitude);
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentDidUpdate(nextProps, nextState) {
         console.log(nextState.latitude);
+        console.log(nextState.longitude);
         this.canOpenGate();
     }
 
@@ -64,9 +66,10 @@ class MapScreen extends Component {
 
     canOpenGate() {
         if(((this.state.latitude <= (HOME_LATITUDE + 0.000500)) && (this.state.latitude >= (HOME_LATITUDE - 0.000500))) &&
-            ((this.state.longitude <= (HOME_LONGITUDE + 0.005000)) && (this.state.longitude >= (HOME_LONGITUDE - 0.000500)))) {
-            console.log('openGate');
+            ((this.state.longitude <= (HOME_LONGITUDE + 0.000500)) && (this.state.longitude >= (HOME_LONGITUDE - 0.000500)))) {
+            return openGate();
         }
+        return console.log('You are so farr');
     }
 
     render() {
@@ -82,6 +85,14 @@ class MapScreen extends Component {
                             longitudeDelta: 0.01,
                         }}
                     >
+                        <MapView.Marker
+                            coordinate={{ latitude: HOME_LATITUDE - 0.000200, longitude: HOME_LONGITUDE}}
+                        >
+                            <Image
+                                source={homeMarker}
+                                style={{ width: 45, height: 45 }}
+                            />
+                        </MapView.Marker>
                         <MapView.Marker
                             coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
                             image={carMarker}
@@ -113,14 +124,6 @@ class MapScreen extends Component {
                             strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
                             strokeWidth={1}
                         />
-                        <MapView.Marker
-                            coordinate={{ latitude: HOME_LATITUDE - 0.000200, longitude: HOME_LONGITUDE}}
-                        >
-                            <Image
-                                source={homeMarker}
-                                style={{ width: 45, height: 45 }}
-                            />
-                        </MapView.Marker>
                     </MapView>
                 </View>
         );
@@ -138,12 +141,6 @@ const styles = StyleSheet.create({
         right: 0,
         justifyContent: 'flex-end',
         alignItems: 'center'
-
-        /*...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: '100%',
-        justifyContent: 'flex-end',
-        alignItems: 'center',*/
     },
     map: {
         position: 'absolute',

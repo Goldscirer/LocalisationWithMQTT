@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Image } from 'react-native';
 import { Button, Header } from './../../src/Components/common';
-import {Ionicons} from "@expo/vector-icons";
 import { Client, Message } from 'react-native-paho-mqtt';
+import {clientConnect, closeGate, setEventHandlers, openGate} from "../Components/Modules/MQTTConnectionHandler";
 
 const myStorage = {
     setItem: (key, item) => {
@@ -25,23 +25,9 @@ class HomeScreen extends Component {
         super(props);
     }
 
-    closeGate() {
-        client.connect()
-            .then(() => {
-                // Once a connection has been made, make a subscription and send a message.
-                console.log('onConnect');
-                return client.subscribe('MQTT_Test');
-            })
-            .then(() => {
-                const message = new Message(MESSAGE_JSON);
-                message.destinationName = 'MQTT_Test';
-                client.send(message);
-            })
-            .catch((responseObject) => {
-                if (responseObject.errorCode !== 0) {
-                    console.log('onConnectionLost:' + responseObject.errorMessage);
-                }
-            });
+    componentDidMount() {
+        setEventHandlers();
+        clientConnect();
     }
 
     render() {
@@ -50,30 +36,11 @@ class HomeScreen extends Component {
                 <Header headerText={'SMART HOME'} />
                 <ScrollView>
                     <Button
-                        onPress={this.closeGate()}
+                        onPress={() => closeGate()}
                     />
                 </ScrollView>
             </View>
         );
-    }
-
-    componentDidMount() {
-        client.connect()
-            .then(() => {
-                // Once a connection has been made, make a subscription and send a message.
-                console.log('onConnect');
-                return client.subscribe('MQTT_Test');
-            })
-            .then(() => {
-                const message = new Message(MESSAGE_JSON);
-                message.destinationName = 'MQTT_Test';
-                client.send(message);
-            })
-            .catch((responseObject) => {
-                if (responseObject.errorCode !== 0) {
-                    console.log('onConnectionLost:' + responseObject.errorMessage);
-                }
-            });
     }
 }
 
