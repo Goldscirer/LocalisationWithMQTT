@@ -6,7 +6,7 @@ const Button = ({ onPress, children }) => {
 
     return (
         <TouchableOpacity onPress={onPress} style={buttonStyle} >
-        <Text style={textStyle}>SEND YOURS LOCATION</Text>
+        <Text style={textStyle}>CLOSE GATE</Text>
         </TouchableOpacity>
     );
 };

@@ -1,6 +1,7 @@
 {
     "extends": "rallycoding",
     "rules": {
-        "react/require-extension": 0
+        "react/require-extension": 0,
+        "code": 100
     }
 }

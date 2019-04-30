@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import {Button, Header} from './src/Components/common';
-import { ScrollView } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './src/reducers';
-import RootNavigation from "./src/RootNavigation";
+import RootNavigation from './src/RootNavigation';
+import {PermissionsAndroid} from 'react-native';
+
+import { createAppContainer } from 'react-navigation';
+
+const AppContainer = createAppContainer(RootNavigation);
 
 class App extends Component {
   render() {
     return (
-        <Provider store={createStore(reducers)}>
-            <View>
-                <RootNavigation />
-            </View>
-        </Provider>
+        <AppContainer />
     );
+  }
+
+  componentWillMount() {
+    this.requestLocationPermissions();
+  }
+
+  async requestLocationPermissions() {
+    try {
+      await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      );
+    } catch (err) {
+      console.warn(err);
+    }
   }
 }
 

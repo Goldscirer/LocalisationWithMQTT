@@ -3,7 +3,9 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 import HomeScreen from "./View/HomeScreen";
-import MapScreen from "./View/MapScreen";
+import MapScreen from "./View/Map";
+import * as Icon from './Icons';
+
 
 const RootNavigation = createBottomTabNavigator(
     {
@@ -12,6 +14,8 @@ const RootNavigation = createBottomTabNavigator(
             path: 'HomeScreen',
             navigationOptions: {
                 tabBarLabel: 'Home',
+                tabBarIcon: ({ focused }) => (focused ? Icon.activeHome : Icon.inactiveHome),
+
             },
         },
         map: {
@@ -19,18 +23,12 @@ const RootNavigation = createBottomTabNavigator(
             path: 'MapScreen',
             navigationOptions: {
                 tabBarLabel: 'Map',
+                tabBarIcon: ({ focused }) => (focused ? Icon.activeMap : Icon.inactiveMap),
             },
         },
     },
     {
         initialRouteName: 'home',
-        tabBarOptions: {
-            activeTintColor: '#ff0000',
-            inactiveTintColor: '#0000FF',
-            style: {
-                borderTopColor: '#0000FF',
-            },
-        },
     }
 );
 
