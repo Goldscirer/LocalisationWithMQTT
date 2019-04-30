@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Image, Text, Keyboard } from 'react-native';
 import {Button, Card, Header} from './../../src/Components/common';
-import {clientConnect, closeGate, setEventHandlers, openGate} from "../Components/Modules/MQTTConnectionHandler";
+import {
+    clientConnect,
+    closeGate,
+    setEventHandlers,
+    openGate,
+    closeGarage, openGarage
+} from "../Components/Modules/MQTTConnectionHandler";
 
 class HomeScreen extends Component {
 
@@ -26,7 +32,15 @@ class HomeScreen extends Component {
                         name = {"OPEN GATE"}
                         onPress={() => openGate()}
                     />
-                    <View style={{marginTop: 100}}>
+                    <Button
+                        name = {"OPEN GARAGE"}
+                        onPress={() => closeGarage()}
+                    />
+                    <Button
+                        name = {"CLOSE GARAGE"}
+                        onPress={() => openGarage()}
+                    />
+                    <View style={{marginTop: 50}}>
                         <Text style={styles.textStyle}>Home parameters:</Text>
 
                      <Text style={styles.cardStyle} onFocus={Keyboard.dismiss()}>
