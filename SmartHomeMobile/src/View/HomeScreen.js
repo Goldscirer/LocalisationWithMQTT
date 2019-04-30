@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Image } from 'react-native';
-import { Button, Header } from './../../src/Components/common';
-import { Client, Message } from 'react-native-paho-mqtt';
+import { View, ScrollView, Image, Text, Keyboard } from 'react-native';
+import {Button, Card, Header} from './../../src/Components/common';
 import {clientConnect, closeGate, setEventHandlers, openGate} from "../Components/Modules/MQTTConnectionHandler";
-
-const myStorage = {
-    setItem: (key, item) => {
-        myStorage[key] = item;
-    },
-    getItem: (key) => myStorage[key],
-    removeItem: (key) => {
-        delete myStorage[key];
-    },
-};
-
-const MESSAGE_JSON = "{ \"state\": 1 }"
-
-const client = new Client({ uri: 'ws://192.168.10.254:1884/ws', clientId: 'Mobile', storage: myStorage });
-
 
 class HomeScreen extends Component {
 
@@ -27,7 +11,6 @@ class HomeScreen extends Component {
 
     componentDidMount() {
         setEventHandlers();
-        clientConnect();
     }
 
     render() {
@@ -36,8 +19,26 @@ class HomeScreen extends Component {
                 <Header headerText={'SMART HOME'} />
                 <ScrollView>
                     <Button
+                        name = {"CLOSE GATE"}
                         onPress={() => closeGate()}
                     />
+                    <Button
+                        name = {"OPEN GATE"}
+                        onPress={() => openGate()}
+                    />
+                    <View style={{marginTop: 100}}>
+                        <Text style={styles.textStyle}>Home parameters:</Text>
+
+                     <Text style={styles.cardStyle} onFocus={Keyboard.dismiss()}>
+                        Temperature: 45.63 °C
+                    </Text>
+                    <Text style={styles.cardStyle}>
+                        Pressure: 45.63 [hPa]
+                    </Text>
+                    <Text style={styles.cardStyle}>
+                        Humidity: 45.63%
+                    </Text>
+                    </View>
                 </ScrollView>
             </View>
         );
@@ -45,3 +46,29 @@ class HomeScreen extends Component {
 }
 
 export default HomeScreen;
+
+const styles = {
+    cardStyle: {
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#007aff',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 10,
+        flex: 1,
+        alignSelf: 'stretch',
+        backgroundColor: '#f6faff',
+        fontSize: 16,
+        fontWeight: '600',
+        padding: 10,
+        color: '#007aff',
+    },
+    textStyle: {
+        alignSelf: 'center',
+        color: '#007aff',
+        fontSize: 16,
+        fontWeight: '600',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+}
