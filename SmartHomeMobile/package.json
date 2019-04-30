@@ -24,7 +24,8 @@
     "react-native-gesture-handler": "^1.1.0",
     "react-native-maps": "^0.24.2",
     "react-native-paho-mqtt": "^0.1.1",
-    "react-navigation": "^3.9.0"
+    "react-navigation": "^3.9.0",
+    "react-native-vector-icons": "latest"
   },
   "devDependencies": {
     "@babel/core": "7.4.0",
