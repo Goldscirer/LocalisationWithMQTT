@@ -12,7 +12,6 @@ import {CoverageSummary as Utils} from "istanbul-lib-coverage";
 
 export function setStateHome(obj){
     console.log('dziallaaa');
-    console.log(HomeScreen.this.state);
 }
 
 class HomeScreen extends Component {

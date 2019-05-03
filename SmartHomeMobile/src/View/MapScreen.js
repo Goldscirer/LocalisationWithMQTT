@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import {View, ScrollView, Text, StyleSheet, Image} from 'react-native';
 import { Button, Header } from './../../src/Components/common';
 import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
-import { sendMessage } from '../View/Map';
+import { sendMessage } from './MapScreen';
 import { Client, Message } from 'react-native-paho-mqtt';
 import {openGate} from "../Components/Modules/MQTTConnectionHandler";
-
-const MESSAGE_JSON_ON = "{ \"state\": 0 }"
-const MESSAGE_JSON_OFF = "{ \"state\": 1 }"
 
 const myStorage = {
     setItem: (key, item) => {
@@ -24,9 +21,6 @@ const homeMarker = require('../../assets/icons/homeLarge.png');
 
 const HOME_LATITUDE = 51.936057;
 const HOME_LONGITUDE = 15.502418;
-
-const client = new Client({ uri: 'ws://192.168.10.254:1884/ws', clientId: 'Mobile', storage: myStorage });
-
 
 class MapScreen extends Component {
 
@@ -121,7 +115,7 @@ class MapScreen extends Component {
                                     longitude: HOME_LONGITUDE + 0.000400
                                 },
                             ]}
-                            strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+                            strokeColor="#000"
                             strokeWidth={1}
                         />
                     </MapView>

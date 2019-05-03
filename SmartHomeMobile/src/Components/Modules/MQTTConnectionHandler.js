@@ -1,59 +1,99 @@
 import { Client, Message } from 'react-native-paho-mqtt';
+import { setStateHome } from "../../View/HomeScreen";
+
+let clientId = 'Mobile';
+let ipAddress = '192.168.1.20:1884';
+let prefix = 'ws://';
+let sufix = '/ws';
+let hostName = prefix + ipAddress + sufix;
 
 const myStorage = {
-    setItem: (key, item) => {
-        myStorage[key] = item;
-    },
-    getItem: (key) => myStorage[key],
-    removeItem: (key) => {
-        delete myStorage[key];
-    },
+  setItem: (key, item) => {
+    myStorage[key] = item;
+  },
+  getItem: key => myStorage[key],
+  removeItem: key => {
+    delete myStorage[key];
+  }
 };
 
-const JSON_CLOSE_GATE = "{ \"state\": 1, userID: Mobile }"
-const JSON_OPEN_GATE = "{  \"state\": 1, userID: Mobile }"
+let isConnect = false;
 
-const client = new Client({ uri: 'ws://192.168.10.254:1884/ws', clientId: 'Mobile', storage: myStorage });
+const JSON_CLOSE = '{ "state": 1, "userID": "Mobile" }';
+const JSON_OPEN = '{  "state": 0, "userID": "Mobile" }';
 
-export function setEventHandlers(){
-    console.log('setEvent');
-    client.on('connectionLost', (responseObject) => {
-        if (responseObject.errorCode !== 0) {
-            console.log(responseObject.errorMessage);
-        }
-    });
-    client.on('messageReceived', (message) => {
-        console.log(message.payloadString);
-    });
+const client = new Client({
+  uri: hostName,
+  clientId: clientId,
+  storage: myStorage
+});
+
+export function setEventHandlers() {
+  console.log('setEvent');
+  client.on('connectionLost', responseObject => {
+    if (responseObject.errorCode !== 0) {
+      console.log(responseObject.errorMessage);
+    }
+  });
+  client.on('messageReceived', message => {
+    console.log(message.payloadString);
+    let obj = JSON.parse(message.payloadString);
+    console.log(obj);
+    setStateHome();
+  });
 }
 
-export function clientConnect(){
-    console.log('clienCOnnect');
-    client.connect()
-        .then(() => {
-            // Once a connection has been made, make a subscription and send a message.
-            console.log('onConnect');
-            return client.subscribe('MQTT_Test');
-        })
-        .catch((responseObject) => {
-            if (responseObject.errorCode !== 0) {
-                console.log('onConnectionLost:' + responseObject.errorMessage);
-            }
-        })
-    ;
+export function clientConnect(host, name) {
+  clientId = name;
+  hostName = host;
+  console.log('clienCOnnect');
+  client
+    .connect()
+    .then(() => {
+      console.log('onConnect');
+      client.subscribe('MQTT_Data');
+      client.subscribe('MQTT_Garage');
+      client.subscribe('MQTT_Test');
+      isConnect = true;
+      return true;
+    })
+    .catch(responseObject => {
+      if (responseObject.errorCode !== 0) {
+        isConnect = false;
+        console.log('onConnectionLost:' + responseObject.errorMessage);
+        return false;
+      }
+    });
 }
 
 export function closeGate() {
-    const message = new Message(JSON_CLOSE_GATE);
+  if (isConnect) {
+    const message = new Message(JSON_CLOSE);
     message.destinationName = 'MQTT_Test';
     client.send(message);
+  }
 }
 
 export function openGate() {
-    const message = new Message(JSON_OPEN_GATE);
+  if (isConnect) {
+    const message = new Message(JSON_OPEN);
     message.destinationName = 'MQTT_Test';
     client.send(message);
+  }
 }
 
+export function closeGarage() {
+  if (isConnect) {
+    const message = new Message(JSON_CLOSE);
+    message.destinationName = 'MQTT_Garage';
+    client.send(message);
+  }
+}
 
-// connect the client
+export function openGarage() {
+  if (isConnect) {
+    const message = new Message(JSON_OPEN);
+    message.destinationName = 'MQTT_Garage';
+    client.send(message);
+  }
+}

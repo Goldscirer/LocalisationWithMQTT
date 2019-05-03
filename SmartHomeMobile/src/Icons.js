@@ -41,3 +41,17 @@ export const activeMap = imageIcon(
     />
 );
 
+export const inactiveSettings = imageIcon(
+    <Image
+        source={require('../assets/icons/settings.png')}
+        style={{ width: 30, height: 30 }}
+    />
+);
+
+export const activeSettings = imageIcon(
+    <Image
+        source={require('../assets/icons/settings.png')}
+        style={{ width: 30, height: 30, tintColor: '#003478' }}
+    />
+);
+

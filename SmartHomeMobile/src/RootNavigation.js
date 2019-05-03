@@ -3,8 +3,9 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 import HomeScreen from "./View/HomeScreen";
-import MapScreen from "./View/Map";
+import MapScreen from "./View/MapScreen";
 import * as Icon from './Icons';
+import SettingsScreen from "./View/SettingsScreen";
 
 
 const RootNavigation = createBottomTabNavigator(
@@ -24,6 +25,14 @@ const RootNavigation = createBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: 'Map',
                 tabBarIcon: ({ focused }) => (focused ? Icon.activeMap : Icon.inactiveMap),
+            },
+        },
+        settings: {
+            screen: SettingsScreen,
+            path: 'SettingsScreen',
+            navigationOptions: {
+                tabBarLabel: 'Settings',
+                tabBarIcon: ({ focused }) => (focused ? Icon.activeSettings : Icon.inactiveSettings),
             },
         },
     },
