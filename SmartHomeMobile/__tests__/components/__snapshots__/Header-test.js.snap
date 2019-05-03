@@ -5,25 +5,27 @@ exports[`renders header 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F8F8",
-      "elevation": 5,
-      "height": 40,
+      "backgroundColor": "#003478",
+      "elevation": 10,
+      "height": 80,
       "justifyContent": "center",
       "paddingTop": 5,
       "position": "relative",
       "shadowColor": "#000",
       "shadowOffset": Object {
-        "height": 20,
+        "height": 40,
         "width": 0,
       },
-      "shadowOpacity": 0.2,
+      "shadowOpacity": 0.5,
     }
   }
 >
   <Text
     style={
       Object {
+        "color": "white",
         "fontSize": 20,
+        "fontWeight": "bold",
       }
     }
   />
