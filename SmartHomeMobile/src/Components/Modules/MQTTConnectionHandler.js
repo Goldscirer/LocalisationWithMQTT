@@ -2,7 +2,7 @@ import { Client, Message } from 'react-native-paho-mqtt';
 import { setStateHome } from "../../View/HomeScreen";
 
 let clientId = 'Mobile';
-let ipAddress = '192.168.1.20:1884';
+let ipAddress = '192.168.10.254:1884';
 let prefix = 'ws://';
 let sufix = '/ws';
 let hostName = prefix + ipAddress + sufix;
@@ -52,7 +52,7 @@ export function clientConnect(host, name) {
     .then(() => {
       console.log('onConnect');
       client.subscribe('MQTT_Data');
-      client.subscribe('MQTT_Garage');
+      client.subscribe('MQTT_Light');
       client.subscribe('MQTT_Test');
       isConnect = true;
       return true;
@@ -84,16 +84,16 @@ export function openGate() {
 
 export function closeGarage() {
   if (isConnect) {
-    const message = new Message(JSON_CLOSE);
-    message.destinationName = 'MQTT_Garage';
+    const message = new Message(JSON_OPEN);
+    message.destinationName = 'MQTT_Light';
     client.send(message);
   }
 }
 
 export function openGarage() {
   if (isConnect) {
-    const message = new Message(JSON_OPEN);
-    message.destinationName = 'MQTT_Garage';
+    const message = new Message(JSON_CLOSE);
+    message.destinationName = 'MQTT_Light';
     client.send(message);
   }
 }

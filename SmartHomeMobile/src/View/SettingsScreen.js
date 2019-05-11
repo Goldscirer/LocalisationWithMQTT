@@ -3,10 +3,8 @@ import { View, ScrollView, TextInput, Text } from 'react-native';
 import { Button, Header } from './../../src/Components/common';
 import {
   clientConnect,
-  closeGate,
-  setEventHandlers,
-  openGate
-} from "../Components/Modules/MQTTConnectionHandler";
+  setEventHandlers
+} from '../Components/Modules/MQTTConnectionHandler';
 import Toast, {DURATION} from 'react-native-easy-toast'
 
 
